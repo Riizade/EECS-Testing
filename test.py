@@ -145,21 +145,6 @@ def generate_files(outputs, suffix):
         f.close()
 
 
-def rename(executable_name, arguments_list, suffix):
-    build("")
-
-    filenames = os.listdir('./')
-    filenames.sort()
-
-    print('Generating \"test-*_' + suffix + '.txt files...\"')
-    for filename in filenames:
-        #for each test case
-        if filename[0:5] == "test-" and not '_' in filename:
-            #if a solution exists
-            #run the program
-            os.system('./'+executable_name+' '+arguments_list+' < '+filename+' > '+rm_ext(filename)+'_'+suffix+'.txt')
-
-
 # deletes test outputs with the correct suffix
 def remove(suffix):
     print('Removing _' + suffix + '.txt files:')
@@ -253,7 +238,7 @@ def run_tests_make(arguments_list):
 # prints test outputs
 # optionally limits the number of lines per test output
 def print_outputs(outputs, n):
-    for testname, output in outputs:
+    for testname, output in outputs.items():
         print(divider())
         print("Output for " + testname + ":")
         print(shorten_output(output, n))
@@ -271,34 +256,6 @@ def shorten_output(output, numlines):
         return "\n".join(outlines[:numlines])
 
 
-def run_simple(executable_name, arguments_list, numlines):
-
-    build("")
-
-    filenames = os.listdir('./')
-    filenames.sort()
-
-    print("Running ./" + executable_name + " " + arguments_list + "...")
-
-    for filename in filenames:
-        #for each test case
-        if filename[0:5] == "test-" and not '_' in filename:
-            print(divider())
-            print("Output for " + filename + ":")
-            out = commands.getoutput('./' + executable_name + ' ' + arguments_list + ' < ' + filename)
-            if numlines == -1:
-                print(out)
-            else:
-                outlines = out.split("\n")
-                for i in range(len(outlines)):
-                    if i > numlines:
-                        break
-                    print(outlines[i])
-
-    print(divider())
-    clean()
-
-
 def compare_outputs(outputs, suffix, diff):
 
     # create data structures
@@ -309,7 +266,7 @@ def compare_outputs(outputs, suffix, diff):
     generate_files(outputs, "tmp")
 
     print('Comparing output...')
-    for test, output in outputs:
+    for test, output in outputs.items():
         if os.path.isfile(test+"_"+suffix+".txt"):
             # diff the output
             out = commands.getoutput('diff ' + test + '_tmp.txt ' + test + '_' + suffix + '.txt')
