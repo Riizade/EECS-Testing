@@ -27,8 +27,8 @@ def main(argv):
     print("\nThis is a test suite for EECS classes at University of Michigan built by Adam Johnson.\n")
 
     try:
-        opts, args = getopt.getopt(argv[1:], "he:a:dt:g:r:on:",
-                                   ["help", "exe=", "args=", "diff", "test=", "gen=", "rm=", "out", "num="])
+        opts, args = getopt.getopt(argv[1:], "he:a:ds:o:n:",
+                                   ["help", "exe=", "args=", "diff", "suffix=", "out=", "num="])
 
     #if invalid command line arguments were given
     except getopt.GetoptError:
@@ -50,17 +50,17 @@ def main(argv):
             diff = 1
         elif opt in ("-n", "--num"):
             n = num(arg)
-        elif opt in ("-t", "--test"):
-            mode = 0
-            suffix = arg
-        elif opt in ("-g", "--gen"):
-            mode = 1
-            suffix = arg
-        elif opt in ("-r", "--rm"):
-            mode = 2
+        elif opt in ("-s", "--suffix"):
             suffix = arg
         elif opt in ("-o", "--out"):
-            mode = 3
+            if arg == "gen":
+                mode = 1
+            elif arg == "test":
+                mode = 0
+            elif arg == "print":
+                mode = 3
+            elif arg == "rm":
+                mode = 2
 
     #decide which mode to use
     if mode == 0:
@@ -77,7 +77,7 @@ def main(argv):
         sys.exit()
     else:
         usage()
-        print("Error: No valid mode specified.")
+        print("Error: No valid output mode specified.")
         sys.exit(2)
 
 
@@ -96,17 +96,18 @@ def usage():
     print("\tExecution Modes")
     print("\t-e, --exe [arg]:\tSpecifies the name of your program executable.")
     print("\tOutput Modes")
-    print("\t-g, --gen [arg]:\tSpecifies to generate test-*_[arg].txt using current program output.")
-    print("\t-t, --test [arg]:\tSpecifies to test against test-*_[arg].txt outputs.")
-    print("\t\t-d, --diff:\t\tSpecifies to print the diff output if a testcase did not pass.")
-    print("\t-r, --rm [arg]:\t\tSpecifies to remove test-*_[arg].txt files.")
-    print("\t-o, --out:\t\tSpecifies to run all tests and print their output to console.")
-    print("\tOnly one of (-g,-t,-r,-o) may be specified at a time.")
+    print("\t\t-d, --diff:\t\tSpecifies to print the diff output if a testcase did not pass, when using \"test\" mode.")
+    print("\t-s, --suffix [arg]:\t\tSpecifies the suffix to be used in the output mode.")
+    print("\t-o, --out [arg]:\t\tSpecifies an output mode.")
+    print("\t\t\"gen\":\tGenerates test-*_[suffix] using current program output.")
+    print("\t\t\"test\":\tTests current output against test-*_[suffix].txt outputs.")
+    print("\t\t\"rm\":\tRemoves test-*_[suffix].txt files.")
+    print("\t\t\"print\":\tPrints current program output for each test to console.")
     print("")
     print("A valid example of generating test-*_old.txt files:")
-    print("\tpython ./test.py -g old -e exchange -a \"-v -m -t\"")
+    print("\tpython ./test.py -o gen -s old -e exchange -a \"-v -m -t\"")
     print("A valid example of regression testing against test-*_old.txt files:")
-    print("\tpython ./test.py -t old -e exchange -a \"-v -m -t\" -d")
+    print("\tpython ./test.py -o test -s old -e exchange -a \"-v -m -t\" -d")
 
 
 def build(executable_name):
