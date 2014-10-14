@@ -16,7 +16,7 @@ def divider():
     return "----------------------------------------------------------"
 
 
-def main(argv):
+def main(argv=sys.argv):
     # argument variables
     buildmode = ""
     executable_name = ""
@@ -357,4 +357,4 @@ def compare_outputs(outputs, suffix, diff):
 
 
 if __name__ == "__main__":
-    main(argv)
+    main()
