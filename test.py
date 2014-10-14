@@ -140,7 +140,7 @@ def clean():
 def generate_files(outputs, suffix):
     for testname, output in outputs.items():
         filename = testname+"_"+suffix+".txt"
-        f = open(filename)
+        f = open(filename, 'w')
         f.write(output)
         f.close()
 
