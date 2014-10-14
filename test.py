@@ -24,7 +24,7 @@ def main(argv):
     mode = -1
     suffix = ""
 
-    print("\nThis is a test suite for EECS 280 and EECS 281 built by Adam Johnson.\n")
+    print("\nThis is a test suite for EECS classes at University of Michigan built by Adam Johnson.\n")
 
     try:
         opts, args = getopt.getopt(argv[1:], "he:a:dt:g:r:on:",
@@ -91,15 +91,17 @@ def usage():
     print("")
     print("The commands are as follows:")
     print("\t-h, --help:\t\tPrints this help text.")
-    print("\t-e, --exe [arg]:\tSpecifies the name of your program executable.")
-    print("\t-a, --args \"[arg]\":\tSpecifies all of your program's command line arguments.")
-    print("\t-d, --diff:\t\tSpecifies to print the diff output if a testcase did not pass.")
     print("\t-n, --num [arg]:\tSpecifies the number of lines to output.")
+    print("\t-a, --args \"[arg]\":\tSpecifies all of your program's command line arguments.")
+    print("\tExecution Modes")
+    print("\t-e, --exe [arg]:\tSpecifies the name of your program executable.")
+    print("\tOutput Modes")
     print("\t-g, --gen [arg]:\tSpecifies to generate test-*_[arg].txt using current program output.")
     print("\t-t, --test [arg]:\tSpecifies to test against test-*_[arg].txt outputs.")
+    print("\t\t-d, --diff:\t\tSpecifies to print the diff output if a testcase did not pass.")
     print("\t-r, --rm [arg]:\t\tSpecifies to remove test-*_[arg].txt files.")
-    print("\t-o, --out:\t\tSpecifies to run all tests and print their output.")
-    print("Only one of (-g,-t,-r,-o) may be specified at a time.")
+    print("\t-o, --out:\t\tSpecifies to run all tests and print their output to console.")
+    print("\tOnly one of (-g,-t,-r,-o) may be specified at a time.")
     print("")
     print("A valid example of generating test-*_old.txt files:")
     print("\tpython ./test.py -g old -e exchange -a \"-v -m -t\"")
