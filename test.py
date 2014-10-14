@@ -17,6 +17,7 @@ def divider():
 
 
 def main(argv):
+    build_mode = ""
     executable_name = ""
     arguments_list = ""
     diff = 0
@@ -27,8 +28,8 @@ def main(argv):
     print("\nThis is a test suite for EECS classes at University of Michigan built by Adam Johnson.\n")
 
     try:
-        opts, args = getopt.getopt(argv[1:], "he:a:ds:o:n:",
-                                   ["help", "exe=", "args=", "diff", "suffix=", "out=", "num="])
+        opts, args = getopt.getopt(argv[1:], "he:b:a:ds:o:n:",
+                                   ["help", "exe=", "build=", "args=", "diff", "suffix=", "out=", "num="])
 
     #if invalid command line arguments were given
     except getopt.GetoptError:
@@ -43,6 +44,8 @@ def main(argv):
             sys.exit()
         elif opt in ("-e", "--exe"):
             executable_name = arg
+        elif opt in ("-b", "--build"):
+            build_mode = arg
         elif opt in ("-a", "--args"):
             arguments_list = arg
             arguments_list.strip('\"')
@@ -93,11 +96,14 @@ def usage():
     print("\t-h, --help:\t\tPrints this help text.")
     print("\t-n, --num [arg]:\tSpecifies the number of lines to output.")
     print("\t-a, --args \"[arg]\":\tSpecifies all of your program's command line arguments.")
-    print("\tExecution Modes")
-    print("\t-e, --exe [arg]:\tSpecifies the name of your program executable.")
+    print("\t-e, --exe [arg]:\tSpecifies the name of your program executable when using a single executable build mode.")
+    print("\tBuild Modes")
+    print("\t-b, --build [arg]:\tSpecifies the build and execution mode.")
+    print("\t\t\"txt\":\tOne executable already built, each test case is a text file read to stdin.")
+    print("\t\t\"make\":\tEach test case is a cpp file with its own make target.")
     print("\tOutput Modes")
-    print("\t\t-d, --diff:\t\tSpecifies to print the diff output if a testcase did not pass, when using \"test\" mode.")
     print("\t-s, --suffix [arg]:\t\tSpecifies the suffix to be used in the output mode.")
+    print("\t-d, --diff:\t\tSpecifies to print the diff output if a testcase did not pass, when using \"test\" mode.")
     print("\t-o, --out [arg]:\t\tSpecifies an output mode.")
     print("\t\t\"gen\":\tGenerates test-*_[suffix] using current program output.")
     print("\t\t\"test\":\tTests current output against test-*_[suffix].txt outputs.")
