@@ -354,3 +354,7 @@ def compare_outputs(outputs, suffix, diff):
     remove('tmp')
 
     clean()
+
+
+if __name__ == "__main__":
+    main(argv)
