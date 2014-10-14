@@ -271,12 +271,12 @@ def compare_outputs(outputs, suffix, diff):
             # diff the output
             out = commands.getoutput('diff ' + test + '_tmp.txt ' + test + '_' + suffix + '.txt')
             if out == '':
-                tests_passed.append(filename)
+                tests_passed.append(test)
             else:
-                tests_failed.append((filename, out))
+                tests_failed.append((test, out))
         else:
             #alert user that no solution exists
-            tests_no_sln.append(filename)
+            tests_no_sln.append(test)
 
     print('\nTests Passed:')
     if len(tests_passed) != 0:
