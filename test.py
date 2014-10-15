@@ -121,7 +121,6 @@ def build(make_target):
     print('make '+make_target)
     out = commands.getoutput('make '+make_target)
     print(out)
-    print('')
     #if an error occurs during building
     if "Error" in out:
         print('Error: Build was not successful.\n')
@@ -232,6 +231,7 @@ def run_tests_make(arguments_list):
             print('./' + rm_ext(testname) + ' ' + arguments_list)
             out = commands.getoutput('./' + rm_ext(testname) + ' ' + arguments_list)
             outputs[rm_ext(testname)] = out
+            print('')
 
     clean()
 
