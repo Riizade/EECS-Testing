@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import commands
 import sys
@@ -84,7 +85,7 @@ def main(argv=sys.argv):
 def usage():
     print("-----Help-----")
     print("This script requires that: ")
-    print("\tYou are on a Linux machine running Python 3")
+    print("\tYou are on a Linux machine running Python >=2.6")
     print("\tAll of your test cases are named \"test-*.txt\" and do not contain a \'_\' in their filename")
     print("\tAll of your program files are contained in the same directory as this script")
     print("\tYour program can be built using \"make -r -R\"")
