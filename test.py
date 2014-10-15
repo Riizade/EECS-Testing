@@ -62,7 +62,7 @@ def main(argv=sys.argv):
     # decide which output mode to use
     if outmode == "test":
         outputs = run_tests(executable_name, arguments_list, buildmode)
-        compare_outputs(outputs, suffix, diff)
+        compare_outputs(outputs, suffix, diff, n)
         sys.exit()
     elif outmode == "gen":
         outputs = run_tests(executable_name, arguments_list, buildmode)
@@ -179,7 +179,7 @@ def get_outputfiles(suffix):
     files = []
     for test in get_testcases():
         if os.path.isfile("./" + rm_ext(test) + '_' + suffix + '.txt'):
-            files.append("./" + rm_ext(test) + '_' + suffix + '.txt')
+            files.append(rm_ext(test) + '_' + suffix + '.txt')
 
     files.sort()
     return files
@@ -252,11 +252,11 @@ def shorten_output(output, numlines):
     if numlines == -1:
         return output
     else:
-        outlines = out.split("\n")
+        outlines = output.split("\n")
         return "\n".join(outlines[:numlines])
 
 
-def compare_outputs(outputs, suffix, diff):
+def compare_outputs(outputs, suffix, diff, numlines):
 
     # create data structures
     tests_passed = []
@@ -264,12 +264,13 @@ def compare_outputs(outputs, suffix, diff):
     tests_no_sln = []
 
     generate_files(outputs, "tmp")
+    old_files = get_outputfiles(suffix)
 
     print('Comparing output...')
     for test, output in outputs.items():
-        if os.path.isfile(test+"_"+suffix+".txt"):
+        if rm_ext(test)+"_"+suffix+".txt" in old_files:
             # diff the output
-            out = commands.getoutput('diff ' + test + '_tmp.txt ' + test + '_' + suffix + '.txt')
+            out = commands.getoutput('diff ' + rm_ext(test) + '_tmp.txt ' + rm_ext(test) + '_' + suffix + '.txt')
             if out == '':
                 tests_passed.append(test)
             else:
@@ -303,7 +304,7 @@ def compare_outputs(outputs, suffix, diff):
             # print diff
             if diff == 1:
                 print(divider())
-                print(shorten_output(test[1], n))
+                print(shorten_output(test[1], numlines))
     else:
         print('None')
     print('')
