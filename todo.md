@@ -13,3 +13,4 @@ To Do
 Feature Wishlist
 ===============================================================================
 - Add verbosity levels to specify how much output is written to stdout
+- Add a specified timeout option so that if a test hangs, the program can still continue
