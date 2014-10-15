@@ -88,7 +88,7 @@ def usage():
     print("\tYou are on a Linux machine running Python >=2.6")
     print("\tAll of your test cases are named \"test-*.txt\" and do not contain a \'_\' in their filename")
     print("\tAll of your program files are contained in the same directory as this script")
-    print("\tYour program can be built using \"make -r -R\"")
+    print("\tYour program can be built using make.")
     print("")
     print("The commands are as follows:")
     print("\t-h, --help:\t\tPrints this help text.")
@@ -228,6 +228,8 @@ def run_tests_make(arguments_list):
             # build the make target
             build(rm_ext(testname))
             # run the executable
+            print("Running "+rm_ext(testname))
+            print('./' + rm_ext(testname) + ' ' + arguments_list)
             out = commands.getoutput('./' + rm_ext(testname) + ' ' + arguments_list)
             outputs[rm_ext(testname)] = out
 
