@@ -115,6 +115,7 @@ def usage():
 
 
 # runs the command ("make "+make_target)
+# returns True on a successful build, False on a failed build
 def build(make_target):
     #build the binary
     print("Building the executable:")
@@ -123,10 +124,11 @@ def build(make_target):
     print(out)
     #if an error occurs during building
     if "Error" in out:
-        print('Error: Build was not successful.\n')
-        sys.exit(3)
+        print('Error: Build was not successful.')
+        return False
     else:
         print('Build successful.')
+        return True
 
 
 # runs make clean
@@ -225,14 +227,19 @@ def run_tests_make(arguments_list):
         # if it's a .cpp file
         if os.path.isfile("./" + rm_ext(testname) + '.cpp'):
             # build the make target
-            build(rm_ext(testname))
-            # run the executable
-            print("Running "+rm_ext(testname))
-            print('./' + rm_ext(testname) + ' ' + arguments_list)
-            out = commands.getoutput('./' + rm_ext(testname) + ' ' + arguments_list)
-            outputs[rm_ext(testname)] = out
-            print('')
+            # if it compiled
+            if build(rm_ext(testname)):
+                # run the executable
+                print("Running "+rm_ext(testname))
+                print('./' + rm_ext(testname) + ' ' + arguments_list)
+                out = commands.getoutput('./' + rm_ext(testname) + ' ' + arguments_list)
+                # store the output
+                outputs[rm_ext(testname)] = out
+            # if it didn't successfully build
+            else:
+                outputs[rm_ext(testname)] = "This test did not successfully compile."
 
+            print('')
     clean()
 
     return outputs
