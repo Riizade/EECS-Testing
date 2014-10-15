@@ -152,8 +152,8 @@ def remove(suffix):
     filenames.sort()
     for filename in filenames:
         if '_' + suffix + '.txt' in filename:
-            print('rm ' + filename)
-            os.system('rm ' + filename)
+            print('rm -f '+filename)
+            os.system('rm -f '+filename)
     print('')
 
 
